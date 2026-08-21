@@ -14,7 +14,7 @@
     <form action="${pageContext.request.contextPath}/uploadDatabase" method="post" enctype="multipart/form-data">
         FirstName: <input type="text" name="firstName"> <br> <br>
         LastName: <input type="text" name="lastName"> <br> <br>
-        Portrait Photo: <input type="text" name="photo"> <br> <br>
+        Portrait Photo: <input type="file" name="photo"> <br> <br>
         <button type="submit">Submit</button>
     </form>
 </body>
