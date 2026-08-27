@@ -14,11 +14,11 @@ public class AuthFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpSession session = request.getSession(false);
-        boolean loggedIn=(session!=null&&session.getAttribute("user")!=null);
-        if(loggedIn){
-            filterChain.doFilter(request,response);
-        }else {
-            response.sendRedirect(request.getContextPath()+"/bai5/login.jsp");
+        boolean loggedIn = (session != null && session.getAttribute("user") != null);
+        if (loggedIn) {
+            filterChain.doFilter(request, response);
+        } else {
+            response.sendRedirect(request.getContextPath() + "/bai5/login.jsp");
         }
     }
 }

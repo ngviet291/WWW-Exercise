@@ -11,8 +11,8 @@
     <title>Trang chủ</title>
 </head>
 <body>
-    <h2>Xin chào, ${sessionScope.user}</h2>
-    <a href="${pageContext.request.contextPath}/bai5/secure/secret.jsp">Trang bảo mật</a><br/>
-    <a href="${pageContext.request.contextPath}/bai5/login.jsp">Đăng xuất</a>
+<h2>Xin chào, ${sessionScope.user}</h2>
+<a href="${pageContext.request.contextPath}/bai5/secure/secret.jsp">Trang bảo mật</a><br/>
+<a href="${pageContext.request.contextPath}/bai5/login.jsp">Đăng xuất</a>
 </body>
 </html>

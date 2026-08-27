@@ -20,6 +20,7 @@ import java.io.IOException;
 public class MultiUploadServlet extends HttpServlet {
     public MultiUploadServlet() {
     }
+
     public static final String UPLOAD_DIR = "uploads";
 
     @Override
@@ -27,29 +28,29 @@ public class MultiUploadServlet extends HttpServlet {
 //        super.doPost(req, resp);
         String uploadPath = getServletContext().getRealPath("") + UPLOAD_DIR;
         System.out.println("Upload Path: " + uploadPath);
-        File uploadDir= new File(uploadPath);
+        File uploadDir = new File(uploadPath);
 
-        if(!uploadDir.exists()){
+        if (!uploadDir.exists()) {
             uploadDir.mkdir();
         }
-        for(Part part: req.getParts()){
+        for (Part part : req.getParts()) {
             String fileName = getFileName(part);
-            if(fileName!=null && !fileName.isEmpty()){
+            if (fileName != null && !fileName.isEmpty()) {
                 System.out.println("Uploading: " + fileName);
                 part.write(uploadPath + File.separator + fileName);
                 System.out.println("Uploaded successfully: " + fileName);
             }
         }
         resp.setContentType("text/html;charset=UTF-8");
-        resp.getWriter().println("<h3>Files uploaded successfully to "+uploadPath+"!</h3>");
+        resp.getWriter().println("<h3>Files uploaded successfully to " + uploadPath + "!</h3>");
     }
 
     private String getFileName(Part part) {
-        String contentDisp=part.getHeader("content-disposition");
-        String[] items=contentDisp.split(";");
-        for(String s: items){
-            if(s.trim().startsWith("filename")){
-                return s.substring(s.indexOf("=")+2,s.length()-1);
+        String contentDisp = part.getHeader("content-disposition");
+        String[] items = contentDisp.split(";");
+        for (String s : items) {
+            if (s.trim().startsWith("filename")) {
+                return s.substring(s.indexOf("=") + 2, s.length() - 1);
             }
         }
         return "";

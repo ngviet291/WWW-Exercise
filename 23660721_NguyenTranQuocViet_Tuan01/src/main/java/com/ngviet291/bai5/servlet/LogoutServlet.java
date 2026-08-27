@@ -14,11 +14,11 @@ public class LogoutServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 //        super.doGet(req, resp);
-        HttpSession session= req.getSession(false);
-        if(session!=null){
+        HttpSession session = req.getSession(false);
+        if (session != null) {
             session.invalidate();
         }
-        resp.sendRedirect(req.getContextPath()+"/bai5/login.jsp");
+        resp.sendRedirect(req.getContextPath() + "/bai5/login.jsp");
     }
 
 }

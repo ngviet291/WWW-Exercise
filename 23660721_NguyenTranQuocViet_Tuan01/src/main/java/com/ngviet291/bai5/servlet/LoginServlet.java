@@ -11,7 +11,7 @@ import java.io.IOException;
 
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
-    private static final long serialVersionUID=1L;
+    private static final long serialVersionUID = 1L;
 
     public LoginServlet() {
 
@@ -20,15 +20,15 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 //        super.doPost(req, resp);
-        String username= req.getParameter("username");
-        String password= req.getParameter("password");
-        if("admin".equals(username)&&"admin".equals(password)){
-            HttpSession session= req.getSession();
-            session.setAttribute("user",username);
-            resp.sendRedirect(req.getContextPath()+"/bai5/home.jsp");
-        }else {
-            req.setAttribute("error","Invalid username or password");
-            req.getRequestDispatcher("/bai5/login.jsp").forward(req,resp);
+        String username = req.getParameter("username");
+        String password = req.getParameter("password");
+        if ("admin".equals(username) && "admin".equals(password)) {
+            HttpSession session = req.getSession();
+            session.setAttribute("user", username);
+            resp.sendRedirect(req.getContextPath() + "/bai5/home.jsp");
+        } else {
+            req.setAttribute("error", "Invalid username or password");
+            req.getRequestDispatcher("/bai5/login.jsp").forward(req, resp);
         }
     }
 }

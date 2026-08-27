@@ -11,7 +11,8 @@
     <title>Bí mật</title>
 </head>
 <body>
-    <h2>Đây là nội dung bí mật chỉ user đã login mới thấy!</h2>
-    <a href="${pageContext.request.contextPath}/bai5/home.jsp">Về trang chủ</a>
-</body>bai5
+<h2>Đây là nội dung bí mật chỉ user đã login mới thấy!</h2>
+<a href="${pageContext.request.contextPath}/bai5/home.jsp">Về trang chủ</a>
+</body>
+bai5
 </html>
