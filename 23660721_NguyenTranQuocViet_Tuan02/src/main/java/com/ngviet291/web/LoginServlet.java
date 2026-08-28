@@ -24,7 +24,7 @@ public class LoginServlet extends HttpServlet {
         if(userSession.isLoggedin()){
             resp.sendRedirect(req.getContextPath()+"/");
         }else {
-            req.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(req, resp);
+            req.getRequestDispatcher("/views/login.jsp").forward(req, resp);
         }
     }
 
@@ -36,7 +36,7 @@ public class LoginServlet extends HttpServlet {
         if(!authenticationService.authentication(username,password)) {
             req.setAttribute("error", "Invalid username or password");
             req.setAttribute("username", username);
-            req.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(req, resp);
+            req.getRequestDispatcher("/views/login.jsp").forward(req, resp);
         }
         userSession.login(username);
         resp.sendRedirect(req.getContextPath() + "/products");

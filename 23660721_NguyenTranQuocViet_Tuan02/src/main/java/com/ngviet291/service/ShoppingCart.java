@@ -17,7 +17,7 @@ public class ShoppingCart implements Serializable {
                 return;
             }
         }
-        items.add(new CartItem(product));
+        items.add(new CartItem(product,1));
     }
     public List<CartItem> getItems(){
         return items;

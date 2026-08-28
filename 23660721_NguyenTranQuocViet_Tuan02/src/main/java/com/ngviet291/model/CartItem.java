@@ -10,6 +10,11 @@ public class CartItem implements Serializable {
     private final Product product;
     private int quantity;
 
+    public CartItem(Product product, int quantity) {
+        this.product = product;
+        this.quantity = 1;
+    }
+
     public void incrementQuantity() {
         this.quantity++;
     }

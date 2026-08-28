@@ -28,7 +28,7 @@ public class ProductsServlet extends HttpServlet {
         }
         req.setAttribute("products", productCatalog.getProducts());
         req.setAttribute("userSession", userSession);
-        req.getRequestDispatcher("/WEB-INF/views/products.jsp").forward(req, resp);
+        req.getRequestDispatcher("/views/products.jsp").forward(req, resp);
     }
 
 }
