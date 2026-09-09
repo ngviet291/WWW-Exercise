@@ -1,4 +1,4 @@
-package om.ngviet291.web;
+package com.ngviet291.web;
 
 import com.ngviet291.service.AuthenticationService;
 import com.ngviet291.session.UserSession;
