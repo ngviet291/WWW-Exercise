@@ -24,7 +24,7 @@ public class CourseService {
             new Course(5, "Java Web nâng cao (Servlet/JSP)", "Hoàng Văn E", "",
                     "Lập trình", "Nâng cao", 4500000, 80, "2026-11-01", true)
     ));
-    private static final AtomicInteger idCounter = new AtomicInteger(6);
+    private static final AtomicInteger idCounter = new AtomicInteger(5);
     public List<Course> getCourses(){
         return  courses;
     }
@@ -52,5 +52,16 @@ public class CourseService {
         if (exist==null) return  false;
         courses.remove(exist);
         return true;
+    }
+    public List<Course> search(String keyword,String category){
+        List<Course> list= new ArrayList<>();
+        for (Course course: courses){
+            boolean matchName = keyword ==null ||keyword.isEmpty() || course.getCourseName().toLowerCase().contains(keyword.toLowerCase());
+            boolean cate = category==null|| category.isEmpty()|| category.equalsIgnoreCase("All")||course.getCategory().equalsIgnoreCase(category);
+            if(matchName&&cate){
+                list.add(course);
+            }
+        }
+        return list;
     }
 }

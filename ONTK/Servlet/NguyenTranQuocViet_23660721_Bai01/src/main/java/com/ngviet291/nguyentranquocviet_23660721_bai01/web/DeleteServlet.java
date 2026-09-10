@@ -19,12 +19,12 @@ public class DeleteServlet extends HttpServlet {
             int id = Integer.parseInt(req.getParameter("id"));
             boolean isDeleted = courseService.removeCourse(id);
             if(!isDeleted){
-                req.setAttribute("message", "Khóa học đã bị xóa hoặc không tồn tại");
+                req.setAttribute("error", "Khóa học đã bị xóa hoặc không tồn tại");
                 req.getRequestDispatcher("/error.jsp").forward(req,resp);
                 return;
             }
         }catch (NumberFormatException e){
-            req.setAttribute("message","Mã khóa học không hợp lệ");
+            req.setAttribute("error","Mã khóa học không hợp lệ");
             req.getRequestDispatcher("/error.jsp").forward(req,resp);
             return;
         }

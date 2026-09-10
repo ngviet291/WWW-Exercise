@@ -25,7 +25,11 @@
                 resp.sendRedirect(req.getContextPath()+"/login");
                 return;
             }
-            List<Course> courses = courseService.getCourses();
+            String keyword = req.getParameter("keyword");
+            String cate = req.getParameter("category");
+            List<Course> courses = courseService.search(keyword,cate);
+            req.setAttribute("keyword",keyword);
+            req.setAttribute("category",cate);
             req.setAttribute("courses",courses);
             req.getRequestDispatcher("/list.jsp").forward(req,resp);
         }
