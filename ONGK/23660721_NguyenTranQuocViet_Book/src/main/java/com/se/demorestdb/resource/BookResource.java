@@ -36,9 +36,5 @@ public class BookResource {
                 .entity("Save failed")
                 .build();
     }
-    @GET
-    @Path("/{publisherId}/{authorKeyword}")
-    public Response findByPublisherAndAuthor(@PathParam("publisherId") int publisherId, @PathParam("authorKeyword") String authorKeyword){
-        return Response.ok(bookService.findByPublisherAndAuthor(publisherId,authorKeyword)).build();
-    }
+
 }

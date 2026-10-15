@@ -1,6 +1,5 @@
 package com.se.demorestdb.repo;
 
-import com.se.demorestdb.dto.BookSearchRequest;
 import com.se.demorestdb.model.Book;
 import com.se.demorestdb.model.Publisher;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -12,7 +11,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+
 @ApplicationScoped
 public class BookRepository {
 
@@ -79,43 +81,5 @@ public class BookRepository {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-    }
-    public List<BookSearchRequest> findByPublisherAndAuthor(int publisherId, String authorKeyword){
-        List<Book> books = new ArrayList<>();
-        List<BookSearchRequest> result = new ArrayList<>();
-        Publisher publisher = null;
-        String sql = "SELECT p.id AS publisherId,p.`name`,p.address,b.id AS bookId,b.title,b.author, b.price FROM publishers p INNER JOIN books b ON b.publisher_id=p.id WHERE p.id=? AND b.author LIKE ?";
-        try (
-                Connection connection = dataSource.getConnection();
-                PreparedStatement ps= connection.prepareStatement(sql);
-        ){
-            ps.setInt(1,publisherId);
-            ps.setString(2, "%"+authorKeyword+"%");
-            try (ResultSet rs = ps.executeQuery()){
-                while (rs.next()){
-                    if (publisher == null) {
-                        publisher = Publisher.builder()
-                                .id(rs.getInt("publisherId"))
-                                .name(rs.getString("name"))
-                                .address(rs.getString("address"))
-                                .build();
-                    }
-                    books.add(Book.builder()
-                            .id(rs.getInt("bookId"))
-                            .title(rs.getString("title"))
-                            .author(rs.getString("author"))
-                            .price(rs.getDouble("price"))
-                            .build());
-
-                }
-                if(publisher!=null){
-                result.add(BookSearchRequest.builder().publisher(publisher).books(books).build());
-                }
-            }
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return result;
     }
 }
