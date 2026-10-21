@@ -1,5 +1,6 @@
 package com.se.demorestdb.resource;
 
+import com.se.demorestdb.dto.PublisherQuantityDto;
 import com.se.demorestdb.model.Publisher;
 import com.se.demorestdb.service.PublisherService;
 import jakarta.inject.Inject;
@@ -41,5 +42,36 @@ public class PublisherResource {
     @Path("/count")
     public Response countBooksByPublisher(){
         return Response.ok(publisherService.countBooksByPublisher()).build();
+    }
+    @GET
+    @Path("/at-least/{n}")
+    public Response findWithAtLeast(@PathParam("n") int n){
+        List<PublisherQuantityDto> publisherQuantityDtos = publisherService.findWithAtLeast(n);
+        return Response.ok(publisherQuantityDtos).build();
+    }
+    @GET
+    @Path("/avgPriceByPublisher")
+    public Response avgPriceByPublisher(){
+        return Response.ok(publisherService.avgPriceByPublisher()).build();
+    }
+    @GET
+    @Path("/totalPriceByPublisher")
+    public Response sumPriceByPublisher(){
+        return Response.ok(publisherService.sumPriceByPublisher()).build();
+    }
+    @GET
+    @Path("/findWithTotalAbove/{x}")
+    public Response findWithTotalAbove(@PathParam("x") double x){
+        return Response.ok(publisherService.findWithTotalAbove(x)).build();
+    }
+    @GET
+    @Path("/findWithAtLeastSortedDesc/{n}")
+    public Response findWithAtLeastSortedDesc(@PathParam("n") int n){
+        return  Response.ok(publisherService.findWithAtLeastSortedDesc(n)).build();
+    }
+    @GET
+    @Path("/findWithoutBooks")
+    public Response findWithoutBooks(){
+        return Response.ok(publisherService.findWithoutBooks()).build();
     }
 }

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Thống kê')}"></head>
+<body>
+<nav th:replace="~{fragments :: nav}"></nav>
+<div class="container">
+    <h3 class="mb-4">Thống kê</h3>
+
+    <div class="row">
+        <!-- Số Employee mỗi Department -->
+        <div class="col-md-6 mb-4">
+            <h5>Số nhân viên theo phòng ban</h5>
+            <table class="table table-bordered">
+                <thead class="table-light"><tr><th>Phòng ban</th><th class="text-end">Số nhân viên</th></tr></thead>
+                <tbody>
+                <tr th:each="c : ${counts}">
+                    <td th:text="${c.departmentName()}"></td>
+                    <td class="text-end" th:text="${c.employeeCount()}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Department chưa có Employee -->
+        <div class="col-md-6 mb-4">
+            <h5>Phòng ban chưa có nhân viên</h5>
+            <ul class="list-group">
+                <li class="list-group-item" th:each="d : ${emptyDepartments}" th:text="${d.name()}"></li>
+                <li class="list-group-item text-muted" th:if="${#lists.isEmpty(emptyDepartments)}">
+                    Tất cả phòng ban đều có nhân viên</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- AVG & SUM lương -->
+    <h5>Lương trung bình và tổng lương theo phòng ban</h5>
+    <table class="table table-bordered mb-4">
+        <thead class="table-light">
+        <tr><th>Phòng ban</th><th class="text-end">Lương trung bình</th><th class="text-end">Tổng lương</th></tr>
+        </thead>
+        <tbody>
+        <tr th:each="s : ${salaryStats}">
+            <td><a th:href="@{/employees(departmentId=${s.departmentId()})}" th:text="${s.departmentName()}"></a></td>
+            <td class="text-end" th:text="${#numbers.formatDecimal(s.avgSalary(), 0, 'POINT', 0, 'COMMA')}"></td>
+            <td class="text-end" th:text="${#numbers.formatDecimal(s.totalSalary(), 0, 'POINT', 0, 'COMMA')}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- Top N lương cao nhất trong Department -->
+    <h5>Top N nhân viên lương cao nhất trong phòng ban</h5>
+    <form class="row g-2 mb-3" th:action="@{/reports}" method="get">
+        <div class="col-md-4">
+            <select class="form-select" name="departmentId" required>
+                <option value="">-- Chọn phòng ban --</option>
+                <option th:each="d : ${departments}" th:value="${d.id()}" th:text="${d.name()}"
+                        th:selected="${departmentId != null and departmentId == d.id()}"></option>
+            </select>
+        </div>
+        <div class="col-md-2"><input type="number" min="1" class="form-control" name="n" th:value="${n}"></div>
+        <div class="col-auto"><button class="btn btn-primary">Xem</button></div>
+    </form>
+
+    <table class="table table-striped" th:if="${topEmployees != null}">
+        <thead class="table-dark">
+        <tr><th>#</th><th>Họ tên</th><th>Vai trò</th><th>Chức vụ</th><th class="text-end">Lương</th></tr>
+        </thead>
+        <tbody>
+        <tr th:each="e, st : ${topEmployees}">
+            <td th:text="${st.count}"></td>
+            <td th:text="${e.name}"></td>
+            <td th:text="${e.role}"></td>
+            <td th:text="${positionTitles.get(e.positionId)}"></td>
+            <td class="text-end" th:text="${#numbers.formatDecimal(e.salary, 0, 'POINT', 0, 'COMMA')}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

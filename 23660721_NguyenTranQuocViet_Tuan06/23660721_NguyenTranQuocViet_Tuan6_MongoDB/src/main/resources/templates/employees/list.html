@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Danh sách nhân viên')}"></head>
+<body>
+<nav th:replace="~{fragments :: nav}"></nav>
+<div class="container">
+
+    <div class="alert alert-success" th:if="${message}" th:text="${message}"></div>
+    <div class="alert alert-danger" th:if="${error}" th:text="${error}"></div>
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3 class="mb-0">Danh sách nhân viên
+            <span class="badge bg-secondary" th:text="${#lists.size(employees)}">0</span></h3>
+        <a class="btn btn-primary" th:href="@{/employees/new}">+ Thêm nhân viên</a>
+    </div>
+
+    <!-- Bộ lọc: findByNameContainingIgnoreCase -->
+    <form class="row g-2 mb-2" th:action="@{/employees}" method="get">
+        <div class="col-md-6"><input class="form-control" name="keyword" th:value="${keyword}" placeholder="Tìm theo tên..."></div>
+        <div class="col-auto"><button class="btn btn-outline-primary">Tìm tên</button></div>
+    </form>
+
+    <!-- findByAgeBetween -->
+    <form class="row g-2 mb-2" th:action="@{/employees}" method="get">
+        <div class="col-md-3"><input type="number" class="form-control" name="minAge" th:value="${minAge}" placeholder="Tuổi từ" required></div>
+        <div class="col-md-3"><input type="number" class="form-control" name="maxAge" th:value="${maxAge}" placeholder="Đến tuổi" required></div>
+        <div class="col-auto"><button class="btn btn-outline-primary">Lọc theo tuổi</button></div>
+    </form>
+
+    <!-- findBySalaryGreaterThan -->
+    <form class="row g-2 mb-2" th:action="@{/employees}" method="get">
+        <div class="col-md-6"><input type="number" step="any" class="form-control" name="minSalary" th:value="${minSalary}" placeholder="Lương lớn hơn..." required></div>
+        <div class="col-auto"><button class="btn btn-outline-primary">Lọc theo lương</button></div>
+    </form>
+
+    <!-- findByPositionId / findByDepartmentId / findByDepartmentIdAndPositionId -->
+    <form class="row g-2 mb-3" th:action="@{/employees}" method="get">
+        <div class="col-md-3">
+            <select class="form-select" name="departmentId">
+                <option value="">-- Tất cả phòng ban --</option>
+                <option th:each="d : ${departments}" th:value="${d.id()}" th:text="${d.name()}"
+                        th:selected="${departmentId != null and departmentId == d.id()}"></option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <select class="form-select" name="positionId">
+                <option value="">-- Tất cả chức vụ --</option>
+                <option th:each="p : ${positions}" th:value="${p.id()}" th:text="${p.title()}"
+                        th:selected="${positionId != null and positionId == p.id()}"></option>
+            </select>
+        </div>
+        <div class="col-auto"><button class="btn btn-outline-primary">Lọc phòng ban / chức vụ</button></div>
+        <div class="col-auto"><a class="btn btn-link" th:href="@{/employees}">Xóa bộ lọc</a></div>
+    </form>
+
+    <table class="table table-striped table-hover align-middle">
+        <thead class="table-dark">
+        <tr>
+            <th>ID</th><th>Họ tên</th><th>Vai trò</th><th>Tuổi</th>
+            <th class="text-end">Lương</th><th>Phòng ban</th><th>Chức vụ</th><th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="e : ${employees}">
+            <td th:text="${e.id}"></td>
+            <td th:text="${e.name}"></td>
+            <td th:text="${e.role}"></td>
+            <td th:text="${e.age}"></td>
+            <td class="text-end" th:text="${#numbers.formatDecimal(e.salary, 0, 'POINT', 0, 'COMMA')}"></td>
+            <td th:text="${departmentNames.get(e.departmentId)}"></td>
+            <td th:text="${positionTitles.get(e.positionId)}"></td>
+            <td class="text-nowrap">
+                <a class="btn btn-sm btn-warning" th:href="@{/employees/{id}/edit(id=${e.id})}">Sửa</a>
+                <form class="d-inline" th:action="@{/employees/{id}/delete(id=${e.id})}" method="post"
+                      onsubmit="return confirm('Xóa nhân viên này?')">
+                    <button class="btn btn-sm btn-danger">Xóa</button>
+                </form>
+            </td>
+        </tr>
+        <tr th:if="${#lists.isEmpty(employees)}">
+            <td colspan="8" class="text-center text-muted">Không có dữ liệu</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

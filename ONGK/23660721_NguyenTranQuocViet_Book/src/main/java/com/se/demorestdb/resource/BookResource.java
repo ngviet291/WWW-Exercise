@@ -29,7 +29,6 @@ public class BookResource {
         boolean savedBook = bookService.save(book);
         if (savedBook) {
             return Response.status(Response.Status.CREATED)
-                    .entity(savedBook)
                     .build();
         }
         return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
