@@ -1,0 +1,27 @@
+info:
+  name: update
+  type: http
+  seq: 4
+
+http:
+  method: PATCH
+  url: localhost:8080/api/employees/216
+  body:
+    type: json
+    data: |-
+      {
+        "name": "Trần Hồng Viên Thiệu",
+        "role": "BITCH",
+        "age": 28,
+        "salary": 2.2E7,
+        "department_id": 1,
+        "position_id": 1
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false

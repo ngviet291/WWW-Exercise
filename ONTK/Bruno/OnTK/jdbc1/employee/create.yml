@@ -1,0 +1,27 @@
+info:
+  name: create
+  type: http
+  seq: 3
+
+http:
+  method: POST
+  url: localhost:8080/api/employees
+  body:
+    type: json
+    data: |-
+      {
+          "name": "Nguyễn Trần Viên Thiệu",
+          "role": "Lập trình viên",
+          "age": 28,
+          "salary": 2.2E7,
+          "department_id": 1,
+          "position_id": 1
+        }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false

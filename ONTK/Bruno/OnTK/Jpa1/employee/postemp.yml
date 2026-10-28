@@ -1,0 +1,31 @@
+info:
+  name: postemp
+  type: http
+  seq: 1
+
+http:
+  method: PATCH
+  url: localhost:8080/api/employees/215
+  body:
+    type: json
+    data: |-
+      {
+        "name": "Nguyễn Trần Quốc Việt",
+        "role": "Lập trình viên",
+        "age": 18,
+        "salary": 2.2E7,
+        "department": {
+          "id": 1
+        },
+        "position": {
+          "id": 2
+        }
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false
